@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Settings for Apex Logging</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Activate_System_Logs__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Activate System Log Entries.</inlineHelpText>
+        <label>Activate System Logs</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates logging is active for this Class/Method combo.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates logging is active for this Class/Method combo.</inlineHelpText>
+        <label>Active</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LogDmlExceptions__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Log Dml Exceptions</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Log_Level__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>1 for  FINEST,
+2 for  FINER,
+3 for FINE,
+4 for DEBUG,
+5 for INFO,
+6 for WARN,
+7 for ERROR
+8 for NONE</inlineHelpText>
+        <label>Log Level</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Send_Email__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Send email to the current logged in user.</inlineHelpText>
+        <label>Send Email</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>ApexLogSettings</label>
+</CustomObject>

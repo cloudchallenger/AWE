@@ -1,0 +1,52 @@
+<apex:page controller="AW_ApexLogsController">
+<apex:sectionHeader title="Apex Log Search" />
+<apex:form >
+<apex:pageBlock title="Search Filter" >
+	<apex:pageBlockButtons location="top" >
+		<apex:commandButton value="Search" action="{!search}" rerender="searchPanel" />
+		<apex:commandButton value="Cancel" />
+	</apex:pageBlockButtons>	
+		<apex:panelGrid columns="4" id="filterGrid">
+			<apex:outputLabel value="User" />
+	        <apex:inputField value="{!apexLogger.OwnerId}" id="user" required="false"/>
+	        <apex:outputLabel value="Start Time" />
+	        <apex:inputField value="{!apexLogger.start_dtm__c}" id="startTime"/>
+	        <apex:outputLabel value="End Time" />
+	        <apex:inputField value="{!apexLogger.stop_dtm__c}" id="theThird"/>
+	   </apex:panelGrid>
+</apex:pageBlock>
+<apex:outputPanel id="searchPanel" >
+<apex:pageBlock title="Search Result"  rendered="{!isResult}">
+	
+	<apex:pageBlockTable value="{!apexLoggerResults}" var="apexLog" rendered="{!apexLoggerResults != null && apexLoggerResults.size > 0}" title = "Apex Logs"> 
+ 		<apex:column HeaderValue="Log Name" >
+ 			<apex:outputLink value="/{!apexLog.id}" id="theLink">{!apexLog.Name}</apex:outputLink>
+ 		</apex:column>
+	    <apex:column value="{!apexLog.class_name__c}" />
+	  <apex:column value="{!apexLog.method_name__c}" />
+	  <apex:column value="{!apexLog.Log_Type__c}" />
+	  <apex:column value="{!apexLog.start_dtm__c}" />
+  </apex:pageBlockTable>
+ <apex:outputPanel rendered="{!AND(isResult , OR(ISNULL(apexLoggerResults) , apexLoggerResults.size == 0))}">
+	  No Apex Log is exist for the user 
+</apex:outputPanel>
+  <apex:outputPanel layout="block" styleClass="pSearchShowMore" id="otpNav2">
+     <!--  Total Records Found: <apex:outputText rendered="{!IF(Con.resultSize==10000,true,false)}">10000 +</apex:outputText><apex:outputText rendered="{!IF(Con.resultSize < 10000,true,false)}">{!Con.resultSize}</apex:outputText>-->
+         <apex:image url="/img/search_prevarrow_disabled.gif"  rendered="{!NOT(hasPrevious)}"/>
+         <apex:image url="/img/search_prevarrow.gif" title="Previous Page"  rendered="{!hasPrevious}"/>&nbsp;
+         <apex:commandLink action="{!Previous}" title="Previous Page" value="Previous" rendered="{!hasPrevious}" rerender="searchPanel,otpNav2"/>
+         <apex:outputPanel style="color:grey" rendered="{!NOT(hasPrevious)}">Previous</apex:outputPanel>    
+         &nbsp;({!IF(pageNumber == 1,1,((pageNumber -1) * pageSize)+1)}-{!IF(apexLoggerResults.size < PageSize,(((pageNumber -1) * pageSize) + apexLoggerResults.size),PageNumber * pageSize)})&nbsp;
+         <apex:outputPanel style="color:grey" rendered="{!NOT(hasNext)}">Next</apex:outputPanel>         
+         <apex:commandLink title="Next Page" value="Next" rendered="{!hasNext}" action="{!next}" rerender="searchPanel,otpNav2"/>&nbsp;
+         <apex:image url="/img/search_nextarrow.gif" title="Next Page"  rendered="{!hasNext}"/>
+         <apex:image url="/img/search_nextarrow_disabled.gif" rendered="{!NOT(hasNext)}"/>   
+
+     
+</apex:outputPanel>  
+  
+</apex:pageBlock>
+
+</apex:outputPanel>
+</apex:form>
+</apex:page>

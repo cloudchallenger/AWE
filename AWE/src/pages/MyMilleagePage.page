@@ -1,0 +1,4 @@
+<apex:page standardController="Mileage__c">
+    <h1>{!$User.FirstName}'s Mileage Page</h1>
+    <apex:detail > subject="{Mileage__c.Contact__c}" relatedList="false"></apex:detail>
+  </apex:page>

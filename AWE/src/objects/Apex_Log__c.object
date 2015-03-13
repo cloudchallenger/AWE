@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object provides a way to log audit, error and exception information from apex code which is persistent (v. debug logs which are not) and which can be further actioned with workflows.</description>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Access_Key__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( 
+  AND ( NOT(ISBLANK(class_name__c)), NOT(ISBLANK( method_name__c ))),
+  class_name__c + &apos;::&apos; + method_name__c,
+  &apos;&apos;   
+  )</formula>
+        <label>Access Key</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Exception_Cause__c</fullName>
+        <description>Exception Cause from the SF Exception Object that was caught.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Exception Cause from the SF Exception Object that was caught.</inlineHelpText>
+        <label>Exception Cause</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Exception_Line_Number__c</fullName>
+        <description>Exception Line Number from the SF Exception Object that was caught.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Exception Line Number from the SF Exception Object that was caught.</inlineHelpText>
+        <label>Exception Line Number</label>
+        <length>9</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Exception_Stack_Trace_String__c</fullName>
+        <description>Exception Stack Trace String from the SF Exception Object that was caught.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Exception Stack Trace String from the SF Exception Object that was caught.</inlineHelpText>
+        <label>Exception Stack Trace String</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Exception_Type__c</fullName>
+        <description>Exception Type Name from the SF Exception Object that was caught.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Exception Type Name from the SF Exception Object that was caught.</inlineHelpText>
+        <label>Exception Type</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Lead__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the Lead record this log is associated with.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to the Lead record this log is associated with.</inlineHelpText>
+        <label>Lead</label>
+        <referenceTo>Lead</referenceTo>
+        <relationshipLabel>Apex Log</relationshipLabel>
+        <relationshipName>Apex_Audit_Log1</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Log_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Log Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ERROR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>WARN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>INFO</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>DEBUG</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FINE</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FINER</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>FINEST</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Message__c</fullName>
+        <description>This is the primary field to contain the error, audit or exception messages we wish to log.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the primary field to contain the error, audit or exception messages we wish to log.</inlineHelpText>
+        <label>Message</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Reference_ID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>Optional Unique ID used to identify this transaction.  This is an External ID.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Optional Unique ID used to identify this transaction.  This is an External ID.</inlineHelpText>
+        <label>Reference ID</label>
+        <length>60</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Status_Code__c</fullName>
+        <description>Optional status code for adding an additional level of detail or segmentation to a log record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional status code for adding an additional level of detail or segmentation to a log record.</inlineHelpText>
+        <label>Status Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Status_Message__c</fullName>
+        <description>Optional status message for adding an additional level of detail or segmentation to a log record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Optional status message for adding an additional level of detail or segmentation to a log record.</inlineHelpText>
+        <label>Status Message</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>class_name__c</fullName>
+        <description>Class (or Trigger) name of relevant apex code the log record is generated from.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Class (or Trigger) name of relevant apex code the log record is generated from.</inlineHelpText>
+        <label>Class Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>method_name__c</fullName>
+        <description>The name of the Apex method creating the audit object.</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The name of the Apex method creating the audit object.</inlineHelpText>
+        <label>Method Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>request_info__c</fullName>
+        <description>This is the request information from web services and callouts.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the request information from web services and callouts.</inlineHelpText>
+        <label>Request Info</label>
+        <length>32000</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>response_info__c</fullName>
+        <description>This is the response information from web services and callouts.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the response information from web services and callouts.</inlineHelpText>
+        <label>Response Info</label>
+        <length>32000</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>start_dtm__c</fullName>
+        <description>DateTime stamp at which the logging process began.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DateTime stamp at which the logging process began.</inlineHelpText>
+        <label>Start DTM</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>start_ms__c</fullName>
+        <description>Millisecond clock value when logging started.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Millisecond clock value when logging started.</inlineHelpText>
+        <label>Start MS</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>stop_dtm__c</fullName>
+        <description>DateTime stamp at which logging process was ended.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DateTime stamp at which logging process was ended.</inlineHelpText>
+        <label>Stop DTM</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>stop_ms__c</fullName>
+        <description>Millisecond clock value when logging was stopped.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Millisecond clock value when logging was stopped.</inlineHelpText>
+        <label>Stop MS</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Apex Log</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Status_Code__c</columns>
+        <columns>Status_Message__c</columns>
+        <columns>Log_Type__c</columns>
+        <columns>Exception_Stack_Trace_String__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Today</fullName>
+        <columns>NAME</columns>
+        <columns>Reference_ID__c</columns>
+        <columns>class_name__c</columns>
+        <columns>method_name__c</columns>
+        <columns>Status_Code__c</columns>
+        <columns>Message__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today</label>
+    </listViews>
+    <listViews>
+        <fullName>Yesterday</fullName>
+        <columns>NAME</columns>
+        <columns>Reference_ID__c</columns>
+        <columns>class_name__c</columns>
+        <columns>method_name__c</columns>
+        <columns>Status_Code__c</columns>
+        <columns>Message__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>YESTERDAY</value>
+        </filters>
+        <label>Yesterday</label>
+    </listViews>
+    <nameField>
+        <displayFormat>LOG-{000000000}</displayFormat>
+        <label>Apex Log Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Apex Log</pluralLabel>
+    <searchLayouts>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Reference_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>class_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>method_name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status_Code__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Reference_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>class_name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>method_name__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Status_Code__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Reference_ID__c</searchFilterFields>
+        <searchFilterFields>class_name__c</searchFilterFields>
+        <searchFilterFields>method_name__c</searchFilterFields>
+        <searchFilterFields>Status_Code__c</searchFilterFields>
+        <searchResultsAdditionalFields>class_name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>method_name__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Read</sharingModel>
+</CustomObject>

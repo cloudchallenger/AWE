@@ -1,0 +1,411 @@
+<apex:page >  
+<apex:includeScript value="{!URLFOR($Resource.UI, 'jquery-1.8.3.js')}"/>    <!--one-->
+<apex:includeScript value="{!URLFOR($Resource.UI, 'jquery-ui.min.js')}"/>    <!--two-->
+<apex:includeScript value="{!URLFOR($Resource.UI, 'jquery.multiselect.js')}"/>  <!--three-->
+
+<apex:stylesheet value="{!URLFOR($Resource.UI, 'jquery-ui.css')}"/>              <!--four-->
+<apex:stylesheet value="{!URLFOR($Resource.UI, 'jquery.multiselect.css')}"/>      <!--five-->
+ 
+ <!--on removing 4 and 5 button visible with no functionality
+     on removing only 4 button visible with functionality but bad styling
+     on removing only 5 button visible with no functionality(diffence in look)-->
+ <!--on removing 1,2,3 no button functionality , also zip code text area appears on top of picklist
+     on removing only 1-5 button visible with functionality but bad styling
+     on removing only 5 button visible with no functionality(diffence in look)-->
+     
+<!-- link rel="stylesheet"
+        href="{!URLFOR($Resource.UI,'jquery-ui.css')}" />
+<link rel="stylesheet"
+        href="{!URLFOR($Resource.UI,'jquery.multiselect.css')}"/ -->
+<style>
+ .popupBackground { 
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            width: 100%; 
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 998;
+            position: absolute;
+   }
+   
+  .popupPanel {
+      border: solid 1px;
+      background-color: white;
+      left: 50%;
+      width: 200px;
+      margin-left: -100px;
+      top: 50%;
+      height: 50px;
+      margin-top: -25px;
+      z-index: 999;
+      position:fixed;
+  }  
+</style>
+
+<!-- table class="detailList" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+        <tr>
+            <td class="data2Col first" colspan="2"></td>
+        </tr>
+        <tr><td class="data2Col last" colspan="2">
+        <table class="list" id="j_id0:pform:j_id4:filterPanel:j_id52" border="0" cellpadding="0" cellspacing="0" width="100%"><colgroup span="8"></colgroup><thead class="rich-table-thead"><tr class="headerRow"><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id53header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id53header:sortDiv">S.No</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id58header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id58header:sortDiv">Related Object</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id60header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id60header:sortDiv">Field</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id62header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id62header:sortDiv">Operator</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id64header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id64header:sortDiv">Value</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id72header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id72header:sortDiv">Evaluate Result</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id73header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id73header:sortDiv">Child Evaluation Operator</div></th><th class="headerRow" scope="col" colspan="1" id="j_id0:pform:j_id4:filterPanel:j_id52:j_id74header"><div id="j_id0:pform:j_id4:filterPanel:j_id52:j_id74header:sortDiv">Action</div></th></tr></thead><tbody id="j_id0:pform:j_id4:filterPanel:j_id52:tb"><tr class="dataRow even first" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}"><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id53" colspan="1" width="10%"><label class="span1"><span class="badge badge-important" width="10%">1</span></label></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id58" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:0:Chooseobj" name="j_id0:pform:j_id4:filterPanel:j_id52:0:Chooseobj" class="input-medium span2" size="1" onchange="fieldNamesList(this.options[this.selectedIndex].value,this.id)" style=" width:225px;"><option value="AcceptedEventRelation">Accepted Event Relation (AcceptedEventRelation)</option><option value="ActivityHistory">Activity History (ActivityHistory)</option><option value="AttachedContentDocument">Attached Content Document (AttachedContentDocument)</option><option value="Attachment">Attachment (Attachment)</option><option value="CampaignMember">Campaign Member (CampaignMember)</option><option value="ContentVersion">Content (ContentVersion)</option><option value="ContentDocumentLink">Content Document Link (ContentDocumentLink)</option><option value="DeclinedEventRelation">Declined Event Relation (DeclinedEventRelation)</option><option value="EmailStatus">Email Status (EmailStatus)</option><option value="EntitySubscription">Entity Subscription (EntitySubscription)</option><option value="Event">Event (Event)</option><option value="EventRelation">Event Relation (EventRelation)</option><option value="FeedComment">Feed Comment (FeedComment)</option><option value="FeedItem">Feed Item (FeedItem)</option><option value="Lead" selected="selected">Lead (Lead)</option><option value="LeadFeed">Lead Feed (LeadFeed)</option><option value="LeadHistory">Lead History (LeadHistory)</option><option value="LeadShare">Lead Share (LeadShare)</option><option value="LeadTag">Lead Tag (LeadTag)</option><option value="Note">Note (Note)</option><option value="NoteAndAttachment">Note and Attachment (NoteAndAttachment)</option><option value="CombinedAttachment">Note, Attachment, Google Doc And File (CombinedAttachment)</option><option value="OpenActivity">Open Activity (OpenActivity)</option><option value="Partner_Lead_Team_Member__c">Partner Lead Team Member (Partner_Lead_Team_Member__c)</option><option value="ProcessInstance">Process Instance (ProcessInstance)</option><option value="ProcessInstanceHistory">Process Instance History (ProcessInstanceHistory)</option><option value="TopicAssignment">Record (TopicAssignment)</option><option value="Task">Task (Task)</option><option value="UndecidedEventRelation">Undecided Event Relation (UndecidedEventRelation)</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id60" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:0:choosefield" name="j_id0:pform:j_id4:filterPanel:j_id52:0:choosefield" class="input-medium span3 changeColor" size="1" onchange="renderOperator(this.options[this.selectedIndex].value,this.id)" style="if(this.options.value=='Cross Formula',color:red;,;)"><option value="--Select--"></option><option value="Assignment_Status__c">.Assignment_Status</option><option value="Last_Assigned__c">.Last_Assigned</option><option value="AWE_RuleURL__c">AWE Rule</option><option value="AWE_Rule__c">AWE Rule</option><option value="Account_Type__c">Account Type</option><option value="AnnualRevenue">Annual Revenue</option><option value="Assigned_to_Distributor__c">Assigned to Distributor</option><option value="Assigned_to_Partner__c">Assigned to Partner</option><option value="Assigned_to_Partner_Contact__c">Assigned to Partner Contact</option><option value="Associated_Account__c">Associated Account</option><option value="City">City</option><option value="Classification_Code_Acc_Assgn__c">Classification Code (Acc Assgn)</option><option value="Company">Company</option><option value="Contact__c">Contact</option><option value="IsConverted">Converted</option><option value="ConvertedAccountId">Converted Account ID</option><option value="ConvertedContactId">Converted Contact ID</option><option value="ConvertedDate">Converted Date</option><option value="ConvertedOpportunityId">Converted Opportunity ID</option><option value="Country">Country</option><option value="Pick_Country__c">Country</option><option value="CreatedById">Created By ID</option><option value="CreatedDate">Created Date</option><option value="CrossFormula">Cross Formula</option><option value="CurrentGenerators__c">Current Generator(s)</option><option value="Jigsaw">Data.com Key</option><option value="DateField__c">DateField</option><option value="IsDeleted">Deleted</option><option value="Description">Description</option><option value="DoNotCall">Do Not Call</option><option value="Do_not_use_Lead_Preassignment_Rules__c">Do not use Lead Preassignment Rules</option><option value="Email">Email</option><option value="EmailBouncedDate">Email Bounced Date</option><option value="EmailBouncedReason">Email Bounced Reason</option><option value="HasOptedOutOfEmail">Email Opt Out</option><option value="NumberOfEmployees">Employees</option><option value="Fax">Fax</option><option value="HasOptedOutOfFax">Fax Opt Out</option><option value="FirstName">First Name</option><option value="Name">Full Name</option><option value="GlobalVariable-Organization">Global Variable - Organization</option><option value="GlobalVariable-Profile">Global Variable - Profile</option><option value="GlobalVariable-User">Global Variable - User</option><option value="GlobalVariable-UserRole">Global Variable - UserRole</option><option value="Industry">Industry</option><option value="Industry_Header_PL__c">Industry Header</option><option value="JigsawContactId">Jigsaw Contact ID</option><option value="LastActivityDate">Last Activity</option><option value="LastModifiedById">Last Modified By ID</option><option value="LastModifiedDate">Last Modified Date</option><option value="LastName">Last Name</option><option value="LastReferencedDate">Last Referenced Date</option><option value="LastTransferDate">Last Transfer Date</option><option value="LastViewedDate">Last Viewed Date</option><option value="Latitude">Latitude</option><option value="CurrencyIsoCode">Lead Currency</option><option value="Id">Lead ID</option><option value="Owner__c">Lead Owner</option><option value="LeadSource">Lead Source</option><option value="Lead_Score__c">Lead_Score</option><option value="Longitude">Longitude</option><option value="MasterRecordId">Master Record ID</option><option value="MobilePhone">Mobile Phone</option><option value="NAGP__c">NAGP</option><option value="Netapp_Sales_Rep__c">Netapp Sales Rep</option><option value="NumberofLocations__c">Number of Locations</option><option value="Marketing_Original_Campaign__c">Originating Marketing Campaign</option><option value="Override_AWE__c">Override AWE</option><option value="OwnerId">Owner ID</option><option value="OwnerName">Owner Name</option><option value="Phone">Phone</option><option value="Primary__c">Primary</option><option value="Sophos_Product_Interest__c">Product Family</option><option value="ProductInterest__c">Product Interest</option><option value="Rating">Rating</option><option value="RecordTypeId">Record Type Name</option><option value="SICCode__c">SIC Code</option><option value="Salutation">Salutation</option><option value="Size_of_Company__c">Size_of_Company</option><option value="Pick_State__c">State (US &amp; Canada)</option><option value="State">State/Province</option><option value="Status">Status</option><option value="Street">Street</option><option value="SystemModstamp">System Modstamp</option><option value="Territory__c">Territory</option><option value="Title">Title</option><option value="IsUnreadByOwner">Unread By Owner</option><option value="Vertical_Industry__c">Vertical (Industry)</option><option value="Website">Website</option><option value="PostalCode" selected="selected">Zip/Postal Code</option></select><span id="j_id0:pform:j_id4:filterPanel:j_id52:0:CFPanel"></span></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id62" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:0:operator" name="j_id0:pform:j_id4:filterPanel:j_id52:0:operator" class="input-medium span3" size="1" onchange="ToggleBetween(this.options[this.selectedIndex].value,this.id)"><option value="Excludes" selected="selected">Excludes</option><option value="Equals">Equals</option><option value="Not Equal To">Not Equal To</option><option value="Is Null">Is Null</option><option value="Is Not Null">Is Not Null</option><option value="IsChanged">IsChanged</option><option value="ChangedFromTo">ChangedFromTo</option><option value="Contains">Contains</option><option value="Does Not Contain">Does Not Contain</option><option value="Starts With">Starts With</option><option value="Ends With">Ends With</option><option value="Does Not Start With">Does Not Start With</option><option value="Does Not End With">Does Not End With</option><option value="Includes">Includes</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id64" colspan="1"><span id="j_id0:pform:j_id4:filterPanel:j_id52:0:Value"><textarea class="input-medium span3" aria-labelledby="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65_pcl" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65" maxlength="32768" name="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65" onchange="handleTextAreaElementChangeWithByteCheck('j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65', 32768, 0, 'remaining', 'over limit');" onclick="handleTextAreaElementChangeWithByteCheck('j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65', 32768, 0, 'remaining', 'over limit');" onkeydown="handleTextAreaElementChangeWithByteCheck('j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65', 32768, 0, 'remaining', 'over limit');" onkeyup="handleTextAreaElementChangeWithByteCheck('j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65', 32768, 0, 'remaining', 'over limit');" onmousedown="handleTextAreaElementChangeWithByteCheck('j_id0:pform:j_id4:filterPanel:j_id52:0:j_id65', 32768, 0, 'remaining', 'over limit');" rows="3" type="text" wrap="soft"></textarea></span><span id="j_id0:pform:j_id4:filterPanel:j_id52:0:ValuePicklist"><select id="j_id0:pform:j_id4:filterPanel:j_id52:0:chooseValue" name="j_id0:pform:j_id4:filterPanel:j_id52:0:chooseValue" class="input-medium span3 multiselect" multiple="multiple" size="2"><option value="Prospect" selected="selected">Prospect</option><option value="Customer">Customer</option><option value="Partner" selected="selected">Partner</option><option value="Prospective Partner">Prospective Partner</option></select></span></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id72" colspan="1"><select aria-labelledby="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResult_pcl" id="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResult" name="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResult"><option value="">--None--</option><option value="True - If no child record found">True - If no child record found</option><option value="False - If no child record found">False - If no child record found</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id73" colspan="1"><select aria-labelledby="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResultOperator_pcl" id="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResultOperator" name="j_id0:pform:j_id4:filterPanel:j_id52:0:evaluateResultOperator"><option value="">--None--</option><option value="AND">AND</option><option value="OR">OR</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id74" colspan="1"><table><tbody><tr><td>
+        <input class="btn" id="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id77" name="j_id0:pform:j_id4:filterPanel:j_id52:0:j_id77" 
+        value="-" type="button"/>
+        </td></tr></tbody></table></td></tr><tr class="dataRow odd last" onmouseover="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}"><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id53" colspan="1" width="10%"><label class="span1"><span class="badge badge-important" width="10%">2</span></label></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id58" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:1:Chooseobj" name="j_id0:pform:j_id4:filterPanel:j_id52:1:Chooseobj" class="input-medium span2" size="1" onchange="fieldNamesList(this.options[this.selectedIndex].value,this.id)" style=" width:225px;"><option value="AcceptedEventRelation">Accepted Event Relation (AcceptedEventRelation)</option><option value="ActivityHistory">Activity History (ActivityHistory)</option><option value="AttachedContentDocument">Attached Content Document (AttachedContentDocument)</option><option value="Attachment">Attachment (Attachment)</option><option value="CampaignMember">Campaign Member (CampaignMember)</option><option value="ContentVersion">Content (ContentVersion)</option><option value="ContentDocumentLink">Content Document Link (ContentDocumentLink)</option><option value="DeclinedEventRelation">Declined Event Relation (DeclinedEventRelation)</option><option value="EmailStatus">Email Status (EmailStatus)</option><option value="EntitySubscription">Entity Subscription (EntitySubscription)</option><option value="Event">Event (Event)</option><option value="EventRelation">Event Relation (EventRelation)</option><option value="FeedComment">Feed Comment (FeedComment)</option><option value="FeedItem">Feed Item (FeedItem)</option><option value="Lead" selected="selected">Lead (Lead)</option><option value="LeadFeed">Lead Feed (LeadFeed)</option><option value="LeadHistory">Lead History (LeadHistory)</option><option value="LeadShare">Lead Share (LeadShare)</option><option value="LeadTag">Lead Tag (LeadTag)</option><option value="Note">Note (Note)</option><option value="NoteAndAttachment">Note and Attachment (NoteAndAttachment)</option><option value="CombinedAttachment">Note, Attachment, Google Doc And File (CombinedAttachment)</option><option value="OpenActivity">Open Activity (OpenActivity)</option><option value="Partner_Lead_Team_Member__c">Partner Lead Team Member (Partner_Lead_Team_Member__c)</option><option value="ProcessInstance">Process Instance (ProcessInstance)</option><option value="ProcessInstanceHistory">Process Instance History (ProcessInstanceHistory)</option><option value="TopicAssignment">Record (TopicAssignment)</option><option value="Task">Task (Task)</option><option value="UndecidedEventRelation">Undecided Event Relation (UndecidedEventRelation)</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id60" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:1:choosefield" name="j_id0:pform:j_id4:filterPanel:j_id52:1:choosefield" class="input-medium span3 changeColor" size="1" onchange="renderOperator(this.options[this.selectedIndex].value,this.id)" style="if(this.options.value=='Cross Formula',color:red;,;)"><option value="--Select--"></option><option value="Assignment_Status__c">.Assignment_Status</option><option value="Last_Assigned__c">.Last_Assigned</option><option value="AWE_RuleURL__c">AWE Rule</option><option value="AWE_Rule__c">AWE Rule</option><option value="Account_Type__c">Account Type</option><option value="AnnualRevenue">Annual Revenue</option><option value="Assigned_to_Distributor__c">Assigned to Distributor</option><option value="Assigned_to_Partner__c">Assigned to Partner</option><option value="Assigned_to_Partner_Contact__c">Assigned to Partner Contact</option><option value="Associated_Account__c">Associated Account</option><option value="City">City</option><option value="Classification_Code_Acc_Assgn__c">Classification Code (Acc Assgn)</option><option value="Company">Company</option><option value="Contact__c">Contact</option><option value="IsConverted">Converted</option><option value="ConvertedAccountId">Converted Account ID</option><option value="ConvertedContactId">Converted Contact ID</option><option value="ConvertedDate">Converted Date</option><option value="ConvertedOpportunityId">Converted Opportunity ID</option><option value="Country">Country</option><option value="Pick_Country__c">Country</option><option value="CreatedById">Created By ID</option><option value="CreatedDate">Created Date</option><option value="CrossFormula">Cross Formula</option><option value="CurrentGenerators__c">Current Generator(s)</option><option value="Jigsaw">Data.com Key</option><option value="DateField__c">DateField</option><option value="IsDeleted">Deleted</option><option value="Description">Description</option><option value="DoNotCall">Do Not Call</option><option value="Do_not_use_Lead_Preassignment_Rules__c">Do not use Lead Preassignment Rules</option><option value="Email">Email</option><option value="EmailBouncedDate">Email Bounced Date</option><option value="EmailBouncedReason">Email Bounced Reason</option><option value="HasOptedOutOfEmail">Email Opt Out</option><option value="NumberOfEmployees">Employees</option><option value="Fax">Fax</option><option value="HasOptedOutOfFax">Fax Opt Out</option><option value="FirstName">First Name</option><option value="Name">Full Name</option><option value="GlobalVariable-Organization">Global Variable - Organization</option><option value="GlobalVariable-Profile">Global Variable - Profile</option><option value="GlobalVariable-User">Global Variable - User</option><option value="GlobalVariable-UserRole">Global Variable - UserRole</option><option value="Industry">Industry</option><option value="Industry_Header_PL__c" selected="selected">Industry Header</option><option value="JigsawContactId">Jigsaw Contact ID</option><option value="LastActivityDate">Last Activity</option><option value="LastModifiedById">Last Modified By ID</option><option value="LastModifiedDate">Last Modified Date</option><option value="LastName">Last Name</option><option value="LastReferencedDate">Last Referenced Date</option><option value="LastTransferDate">Last Transfer Date</option><option value="LastViewedDate">Last Viewed Date</option><option value="Latitude">Latitude</option><option value="CurrencyIsoCode">Lead Currency</option><option value="Id">Lead ID</option><option value="Owner__c">Lead Owner</option><option value="LeadSource">Lead Source</option><option value="Lead_Score__c">Lead_Score</option><option value="Longitude">Longitude</option><option value="MasterRecordId">Master Record ID</option><option value="MobilePhone">Mobile Phone</option><option value="NAGP__c">NAGP</option><option value="Netapp_Sales_Rep__c">Netapp Sales Rep</option><option value="NumberofLocations__c">Number of Locations</option><option value="Marketing_Original_Campaign__c">Originating Marketing Campaign</option><option value="Override_AWE__c">Override AWE</option><option value="OwnerId">Owner ID</option><option value="OwnerName">Owner Name</option><option value="Phone">Phone</option><option value="Primary__c">Primary</option><option value="Sophos_Product_Interest__c">Product Family</option><option value="ProductInterest__c">Product Interest</option><option value="Rating">Rating</option><option value="RecordTypeId">Record Type Name</option><option value="SICCode__c">SIC Code</option><option value="Salutation">Salutation</option><option value="Size_of_Company__c">Size_of_Company</option><option value="Pick_State__c">State (US &amp; Canada)</option><option value="State">State/Province</option><option value="Status">Status</option><option value="Street">Street</option><option value="SystemModstamp">System Modstamp</option><option value="Territory__c">Territory</option><option value="Title">Title</option><option value="IsUnreadByOwner">Unread By Owner</option><option value="Vertical_Industry__c">Vertical (Industry)</option><option value="Website">Website</option><option value="PostalCode">Zip/Postal Code</option></select><span id="j_id0:pform:j_id4:filterPanel:j_id52:1:CFPanel"></span></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id62" colspan="1"><select id="j_id0:pform:j_id4:filterPanel:j_id52:1:operator" name="j_id0:pform:j_id4:filterPanel:j_id52:1:operator" class="input-medium span3" size="1" onchange="ToggleBetween(this.options[this.selectedIndex].value,this.id)"><option value="Includes" selected="selected">Includes</option><option value="Equals">Equals</option><option value="Not Equal To">Not Equal To</option><option value="Is Null">Is Null</option><option value="Is Not Null">Is Not Null</option><option value="IsChanged">IsChanged</option><option value="ChangedFromTo">ChangedFromTo</option><option value="Contains">Contains</option><option value="Does Not Contain">Does Not Contain</option><option value="Starts With">Starts With</option><option value="Ends With">Ends With</option><option value="Does Not Start With">Does Not Start With</option><option value="Does Not End With">Does Not End With</option><option value="Excludes">Excludes</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id64" colspan="1"><span id="j_id0:pform:j_id4:filterPanel:j_id52:1:ValuePicklistMulti"><select id="j_id0:pform:j_id4:filterPanel:j_id52:1:chooseValueMulti" name="j_id0:pform:j_id4:filterPanel:j_id52:1:chooseValueMulti" class="input-medium span3 multiselect" multiple="multiple" size="2"><option value="Aerospace &amp; Defense" selected="selected">Aerospace &amp; Defense</option><option value="Biotechnology">Biotechnology</option><option value="Consumer Products">Consumer Products</option><option value="Education Higher Ed/Tertiary">Education Higher Ed/Tertiary</option><option value="Education Primary/Secondary">Education Primary/Secondary</option><option value="Entertainment &amp; Media">Entertainment &amp; Media</option><option value="Financial Services">Financial Services</option><option value="Government,Local" selected="selected">Government,Local</option><option value="Government, National/Federal" selected="selected">Government, National/Federal</option><option value="Government, State/Regional">Government, State/Regional</option><option value="Healthcare-Private">Healthcare-Private</option><option value="Healthcare-Public">Healthcare-Public</option><option value="High Technology">High Technology</option><option value="ISP">ISP</option><option value="Manufacturing">Manufacturing</option><option value="MSP">MSP</option><option value="MSP/Reseller">MSP/Reseller</option><option value="Natural Resources">Natural Resources</option><option value="Non-Profit">Non-Profit</option><option value="Retail">Retail</option><option value="Services">Services</option><option value="Telecommunications">Telecommunications</option><option value="Transportation">Transportation</option><option value="Utility">Utility</option><option value="Other">Other</option></select></span></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id72" colspan="1"><select aria-labelledby="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResult_pcl" id="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResult" name="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResult"><option value="">--None--</option><option value="True - If no child record found">True - If no child record found</option><option value="False - If no child record found">False - If no child record found</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id73" colspan="1"><select aria-labelledby="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResultOperator_pcl" id="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResultOperator" name="j_id0:pform:j_id4:filterPanel:j_id52:1:evaluateResultOperator"><option value="">--None--</option><option value="AND">AND</option><option value="OR">OR</option></select></td><td class="dataCell" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id74" colspan="1"><table><tbody><tr><td>
+        <input class="btn" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id76" name="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id76"  value="+" type="button"/></td><td>
+        <input class="btn" id="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id77" name="j_id0:pform:j_id4:filterPanel:j_id52:1:j_id77"  value="-" type="button"/></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>
+-->
+
+<table class="list " id="j_id0:pform:j_id7:filterPanel:j_id55" border="0" cellpadding="0" cellspacing="0" width="100%"><colgroup span="8"></colgroup><thead class="rich-table-thead"><tr class="headerRow "><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id56header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id56header:sortDiv">S.No</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id61header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id61header:sortDiv">Related Object</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id63header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id63header:sortDiv">Field</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id65header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id65header:sortDiv">Operator</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id67header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id67header:sortDiv">Value</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id75header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id75header:sortDiv">Evaluate Result</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id76header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id76header:sortDiv">Child Evaluation Operator</div></th><th class="headerRow  " scope="col" colspan="1" id="j_id0:pform:j_id7:filterPanel:j_id55:j_id77header"><div id="j_id0:pform:j_id7:filterPanel:j_id55:j_id77header:sortDiv">Action</div></th></tr></thead><tbody id="j_id0:pform:j_id7:filterPanel:j_id55:tb"><tr class="dataRow even  first" onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}"><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id56" colspan="1" width="10%"> 
+                        <label class="span1"><span class="badge badge-important" width="10%">1
+                        </span></label></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id61" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:0:Chooseobj" name="j_id0:pform:j_id7:filterPanel:j_id55:0:Chooseobj" class="input-medium span2" size="1" onchange="fieldNamesList(this.options[this.selectedIndex].value,this.id)" style=" width:225px;">    <option value="AcceptedEventRelation">Accepted Event Relation (AcceptedEventRelation)</option>
+    <option value="ActivityHistory">Activity History (ActivityHistory)</option>
+    <option value="AttachedContentDocument">Attached Content Document (AttachedContentDocument)</option>
+    <option value="Attachment">Attachment (Attachment)</option>
+    <option value="CampaignMember">Campaign Member (CampaignMember)</option>
+    <option value="ContentVersion">Content (ContentVersion)</option>
+    <option value="ContentDocumentLink">Content Document Link (ContentDocumentLink)</option>
+    <option value="DeclinedEventRelation">Declined Event Relation (DeclinedEventRelation)</option>
+    <option value="EmailStatus">Email Status (EmailStatus)</option>
+    <option value="EntitySubscription">Entity Subscription (EntitySubscription)</option>
+    <option value="Event">Event (Event)</option>
+    <option value="EventRelation">Event Relation (EventRelation)</option>
+    <option value="FeedComment">Feed Comment (FeedComment)</option>
+    <option value="FeedItem">Feed Item (FeedItem)</option>
+    <option value="Lead" selected="selected">Lead (Lead)</option>
+    <option value="LeadFeed">Lead Feed (LeadFeed)</option>
+    <option value="LeadHistory">Lead History (LeadHistory)</option>
+    <option value="LeadShare">Lead Share (LeadShare)</option>
+    <option value="LeadTag">Lead Tag (LeadTag)</option>
+    <option value="Note">Note (Note)</option>
+    <option value="NoteAndAttachment">Note and Attachment (NoteAndAttachment)</option>
+    <option value="CombinedAttachment">Note, Attachment, Google Doc And File (CombinedAttachment)</option>
+    <option value="OpenActivity">Open Activity (OpenActivity)</option>
+    <option value="Partner_Lead_Team_Member__c">Partner Lead Team Member (Partner_Lead_Team_Member__c)</option>
+    <option value="ProcessInstance">Process Instance (ProcessInstance)</option>
+    <option value="ProcessInstanceHistory">Process Instance History (ProcessInstanceHistory)</option>
+    <option value="TopicAssignment">Record (TopicAssignment)</option>
+    <option value="Task">Task (Task)</option>
+    <option value="UndecidedEventRelation">Undecided Event Relation (UndecidedEventRelation)</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id63" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:0:choosefield" name="j_id0:pform:j_id7:filterPanel:j_id55:0:choosefield" class="input-medium span3 changeColor" size="1" onchange="renderOperator(this.options[this.selectedIndex].value,this.id)" style="if(this.options.value=='Cross Formula',color:red;,;)">   <option value="--Select--"></option>
+    <option value="Assignment_Status__c">.Assignment_Status</option>
+    <option value="Last_Assigned__c">.Last_Assigned</option>
+    <option value="AWE_RuleURL__c">AWE Rule</option>
+    <option value="AWE_Rule__c">AWE Rule</option>
+    <option value="Account_Type__c" selected="selected">Account Type</option>
+    <option value="AnnualRevenue">Annual Revenue</option>
+    <option value="Assigned_to_Distributor__c">Assigned to Distributor</option>
+    <option value="Assigned_to_Partner__c">Assigned to Partner</option>
+    <option value="Assigned_to_Partner_Contact__c">Assigned to Partner Contact</option>
+    <option value="Associated_Account__c">Associated Account</option>
+    <option value="City">City</option>
+    <option value="Classification_Code_Acc_Assgn__c">Classification Code (Acc Assgn)</option>
+    <option value="Company">Company</option>
+    <option value="Contact__c">Contact</option>
+    <option value="IsConverted">Converted</option>
+    <option value="ConvertedAccountId">Converted Account ID</option>
+    <option value="ConvertedContactId">Converted Contact ID</option>
+    <option value="ConvertedDate">Converted Date</option>
+    <option value="ConvertedOpportunityId">Converted Opportunity ID</option>
+    <option value="Country">Country</option>
+    <option value="Pick_Country__c">Country</option>
+    <option value="CreatedById">Created By ID</option>
+    <option value="CreatedDate">Created Date</option>
+    <option value="CrossFormula" style="color: rgb(255, 0, 0);">Cross Formula</option>
+    <option value="CurrentGenerators__c">Current Generator(s)</option>
+    <option value="Jigsaw">Data.com Key</option>
+    <option value="DateField__c">DateField</option>
+    <option value="IsDeleted">Deleted</option>
+    <option value="Description">Description</option>
+    <option value="DoNotCall">Do Not Call</option>
+    <option value="Do_not_use_Lead_Preassignment_Rules__c">Do not use Lead Preassignment Rules</option>
+    <option value="Email">Email</option>
+    <option value="EmailBouncedDate">Email Bounced Date</option>
+    <option value="EmailBouncedReason">Email Bounced Reason</option>
+    <option value="HasOptedOutOfEmail">Email Opt Out</option>
+    <option value="NumberOfEmployees">Employees</option>
+    <option value="Fax">Fax</option>
+    <option value="HasOptedOutOfFax">Fax Opt Out</option>
+    <option value="FirstName">First Name</option>
+    <option value="Name">Full Name</option>
+    <option value="GlobalVariable-Organization" style="color: rgb(255, 0, 0);">Global Variable - Organization</option>
+    <option value="GlobalVariable-Profile" style="color: rgb(255, 0, 0);">Global Variable - Profile</option>
+    <option value="GlobalVariable-User" style="color: rgb(255, 0, 0);">Global Variable - User</option>
+    <option value="GlobalVariable-UserRole" style="color: rgb(255, 0, 0);">Global Variable - UserRole</option>
+    <option value="Industry">Industry</option>
+    <option value="Industry_Header_PL__c">Industry Header</option>
+    <option value="JigsawContactId">Jigsaw Contact ID</option>
+    <option value="LastActivityDate">Last Activity</option>
+    <option value="LastModifiedById">Last Modified By ID</option>
+    <option value="LastModifiedDate">Last Modified Date</option>
+    <option value="LastName">Last Name</option>
+    <option value="LastReferencedDate">Last Referenced Date</option>
+    <option value="LastTransferDate">Last Transfer Date</option>
+    <option value="LastViewedDate">Last Viewed Date</option>
+    <option value="Latitude">Latitude</option>
+    <option value="CurrencyIsoCode">Lead Currency</option>
+    <option value="Id">Lead ID</option>
+    <option value="Owner__c">Lead Owner</option>
+    <option value="LeadSource">Lead Source</option>
+    <option value="Lead_Score__c">Lead_Score</option>
+    <option value="Longitude">Longitude</option>
+    <option value="MasterRecordId">Master Record ID</option>
+    <option value="MobilePhone">Mobile Phone</option>
+    <option value="NAGP__c">NAGP</option>
+    <option value="Netapp_Sales_Rep__c">Netapp Sales Rep</option>
+    <option value="NumberofLocations__c">Number of Locations</option>
+    <option value="Marketing_Original_Campaign__c">Originating Marketing Campaign</option>
+    <option value="Override_AWE__c">Override AWE</option>
+    <option value="OwnerId">Owner ID</option>
+    <option value="OwnerName">Owner Name</option>
+    <option value="Phone">Phone</option>
+    <option value="Primary__c">Primary</option>
+    <option value="Sophos_Product_Interest__c">Product Family</option>
+    <option value="ProductInterest__c">Product Interest</option>
+    <option value="Rating">Rating</option>
+    <option value="RecordTypeId">Record Type Name</option>
+    <option value="SICCode__c">SIC Code</option>
+    <option value="Salutation">Salutation</option>
+    <option value="Size_of_Company__c">Size_of_Company</option>
+    <option value="Pick_State__c">State (US &amp; Canada)</option>
+    <option value="State">State/Province</option>
+    <option value="Status">Status</option>
+    <option value="Street">Street</option>
+    <option value="SystemModstamp">System Modstamp</option>
+    <option value="Territory__c">Territory</option>
+    <option value="Title">Title</option>
+    <option value="IsUnreadByOwner">Unread By Owner</option>
+    <option value="Vertical_Industry__c">Vertical (Industry)</option>
+    <option value="Website">Website</option>
+    <option value="PostalCode">Zip/Postal Code</option>
+</select><span id="j_id0:pform:j_id7:filterPanel:j_id55:0:CFPanel"></span></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id65" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:0:operator" name="j_id0:pform:j_id7:filterPanel:j_id55:0:operator" class="input-medium span3" size="1" onchange="ToggleBetween(this.options[this.selectedIndex].value,this.id)">  <option value="Excludes" selected="selected">Excludes</option>
+    <option value="Equals">Equals</option>
+    <option value="Not Equal To">Not Equal To</option>
+    <option value="Is Null">Is Null</option>
+    <option value="Is Not Null">Is Not Null</option>
+    <option value="IsChanged">IsChanged</option>
+    <option value="ChangedFromTo">ChangedFromTo</option>
+    <option value="Contains">Contains</option>
+    <option value="Does Not Contain">Does Not Contain</option>
+    <option value="Starts With">Starts With</option>
+    <option value="Ends With">Ends With</option>
+    <option value="Does Not Start With">Does Not Start With</option>
+    <option value="Does Not End With">Does Not End With</option>
+    <option value="Includes">Includes</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id67" colspan="1"><span id="j_id0:pform:j_id7:filterPanel:j_id55:0:ValuePicklistMulti"><select id="j_id0:pform:j_id7:filterPanel:j_id55:0:chooseValueMulti" name="j_id0:pform:j_id7:filterPanel:j_id55:0:chooseValueMulti" class="input-medium span3 multiselect" multiple="multiple" size="2" style="display: none;">    <option value="Prospect" selected="selected">Prospect</option>
+    <option value="Customer">Customer</option>
+    <option value="Partner" selected="selected">Partner</option>
+    <option value="Prospective Partner">Prospective Partner</option>
+</select><!-- button type="button" class="ui-multiselect ui-widget ui-state-default ui-corner-all" aria-haspopup="true" style="width: 225px;"><span class="ui-icon ui-icon-triangle-1-s"></span><span>Prospect, Partner</span></button --></span></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id75" colspan="1"><select aria-labelledby="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResult_pcl" id="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResult" name="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResult"><option value="">--None--</option><option value="True - If no child record found">True - If no child record found</option>
+<option value="False - If no child record found">False - If no child record found</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id76" colspan="1"><select aria-labelledby="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResultOperator_pcl" id="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResultOperator" name="j_id0:pform:j_id7:filterPanel:j_id55:0:evaluateResultOperator"><option value="">--None--</option><option value="AND">AND</option>
+<option value="OR">OR</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id77" colspan="1"><table>
+<tbody>
+<tr>
+<td><input class="btn" id="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id80" name="j_id0:pform:j_id7:filterPanel:j_id55:0:j_id80" onclick="A4J.AJAX.Submit('j_id0:pform',event,{'oncomplete':function(request,event,data){showCrossObjectFieldInColor();},'similarityGroupingId':'j_id0:pform:j_id7:filterPanel:j_id55:0:j_id80','parameters':{'index':'2','j_id0:pform:j_id7:filterPanel:j_id55:0:j_id80':'j_id0:pform:j_id7:filterPanel:j_id55:0:j_id80'} } );return false;" value="-" type="button"></input></td>
+</tr>
+</tbody>
+</table>
+</td></tr><tr class="dataRow odd  last" onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}"><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id56" colspan="1" width="10%"> 
+                        <label class="span1"><span class="badge badge-important" width="10%">2
+                        </span></label></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id61" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:1:Chooseobj" name="j_id0:pform:j_id7:filterPanel:j_id55:1:Chooseobj" class="input-medium span2" size="1" onchange="fieldNamesList(this.options[this.selectedIndex].value,this.id)" style=" width:225px;">    <option value="AcceptedEventRelation">Accepted Event Relation (AcceptedEventRelation)</option>
+    <option value="ActivityHistory">Activity History (ActivityHistory)</option>
+    <option value="AttachedContentDocument">Attached Content Document (AttachedContentDocument)</option>
+    <option value="Attachment">Attachment (Attachment)</option>
+    <option value="CampaignMember">Campaign Member (CampaignMember)</option>
+    <option value="ContentVersion">Content (ContentVersion)</option>
+    <option value="ContentDocumentLink">Content Document Link (ContentDocumentLink)</option>
+    <option value="DeclinedEventRelation">Declined Event Relation (DeclinedEventRelation)</option>
+    <option value="EmailStatus">Email Status (EmailStatus)</option>
+    <option value="EntitySubscription">Entity Subscription (EntitySubscription)</option>
+    <option value="Event">Event (Event)</option>
+    <option value="EventRelation">Event Relation (EventRelation)</option>
+    <option value="FeedComment">Feed Comment (FeedComment)</option>
+    <option value="FeedItem">Feed Item (FeedItem)</option>
+    <option value="Lead" selected="selected">Lead (Lead)</option>
+    <option value="LeadFeed">Lead Feed (LeadFeed)</option>
+    <option value="LeadHistory">Lead History (LeadHistory)</option>
+    <option value="LeadShare">Lead Share (LeadShare)</option>
+    <option value="LeadTag">Lead Tag (LeadTag)</option>
+    <option value="Note">Note (Note)</option>
+    <option value="NoteAndAttachment">Note and Attachment (NoteAndAttachment)</option>
+    <option value="CombinedAttachment">Note, Attachment, Google Doc And File (CombinedAttachment)</option>
+    <option value="OpenActivity">Open Activity (OpenActivity)</option>
+    <option value="Partner_Lead_Team_Member__c">Partner Lead Team Member (Partner_Lead_Team_Member__c)</option>
+    <option value="ProcessInstance">Process Instance (ProcessInstance)</option>
+    <option value="ProcessInstanceHistory">Process Instance History (ProcessInstanceHistory)</option>
+    <option value="TopicAssignment">Record (TopicAssignment)</option>
+    <option value="Task">Task (Task)</option>
+    <option value="UndecidedEventRelation">Undecided Event Relation (UndecidedEventRelation)</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id63" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:1:choosefield" name="j_id0:pform:j_id7:filterPanel:j_id55:1:choosefield" class="input-medium span3 changeColor" size="1" onchange="renderOperator(this.options[this.selectedIndex].value,this.id)" style="if(this.options.value=='Cross Formula',color:red;,;)">   <option value="--Select--"></option>
+    <option value="Assignment_Status__c">.Assignment_Status</option>
+    <option value="Last_Assigned__c">.Last_Assigned</option>
+    <option value="AWE_RuleURL__c">AWE Rule</option>
+    <option value="AWE_Rule__c">AWE Rule</option>
+    <option value="Account_Type__c">Account Type</option>
+    <option value="AnnualRevenue">Annual Revenue</option>
+    <option value="Assigned_to_Distributor__c">Assigned to Distributor</option>
+    <option value="Assigned_to_Partner__c">Assigned to Partner</option>
+    <option value="Assigned_to_Partner_Contact__c">Assigned to Partner Contact</option>
+    <option value="Associated_Account__c">Associated Account</option>
+    <option value="City">City</option>
+    <option value="Classification_Code_Acc_Assgn__c">Classification Code (Acc Assgn)</option>
+    <option value="Company">Company</option>
+    <option value="Contact__c">Contact</option>
+    <option value="IsConverted">Converted</option>
+    <option value="ConvertedAccountId">Converted Account ID</option>
+    <option value="ConvertedContactId">Converted Contact ID</option>
+    <option value="ConvertedDate">Converted Date</option>
+    <option value="ConvertedOpportunityId">Converted Opportunity ID</option>
+    <option value="Country">Country</option>
+    <option value="Pick_Country__c">Country</option>
+    <option value="CreatedById">Created By ID</option>
+    <option value="CreatedDate">Created Date</option>
+    <option value="CrossFormula" style="color: rgb(255, 0, 0);">Cross Formula</option>
+    <option value="CurrentGenerators__c">Current Generator(s)</option>
+    <option value="Jigsaw">Data.com Key</option>
+    <option value="DateField__c">DateField</option>
+    <option value="IsDeleted">Deleted</option>
+    <option value="Description">Description</option>
+    <option value="DoNotCall">Do Not Call</option>
+    <option value="Do_not_use_Lead_Preassignment_Rules__c">Do not use Lead Preassignment Rules</option>
+    <option value="Email">Email</option>
+    <option value="EmailBouncedDate">Email Bounced Date</option>
+    <option value="EmailBouncedReason">Email Bounced Reason</option>
+    <option value="HasOptedOutOfEmail">Email Opt Out</option>
+    <option value="NumberOfEmployees">Employees</option>
+    <option value="Fax">Fax</option>
+    <option value="HasOptedOutOfFax">Fax Opt Out</option>
+    <option value="FirstName">First Name</option>
+    <option value="Name">Full Name</option>
+    <option value="GlobalVariable-Organization" style="color: rgb(255, 0, 0);">Global Variable - Organization</option>
+    <option value="GlobalVariable-Profile" style="color: rgb(255, 0, 0);">Global Variable - Profile</option>
+    <option value="GlobalVariable-User" style="color: rgb(255, 0, 0);">Global Variable - User</option>
+    <option value="GlobalVariable-UserRole" style="color: rgb(255, 0, 0);">Global Variable - UserRole</option>
+    <option value="Industry">Industry</option>
+    <option value="Industry_Header_PL__c" selected="selected">Industry Header</option>
+    <option value="JigsawContactId">Jigsaw Contact ID</option>
+    <option value="LastActivityDate">Last Activity</option>
+    <option value="LastModifiedById">Last Modified By ID</option>
+    <option value="LastModifiedDate">Last Modified Date</option>
+    <option value="LastName">Last Name</option>
+    <option value="LastReferencedDate">Last Referenced Date</option>
+    <option value="LastTransferDate">Last Transfer Date</option>
+    <option value="LastViewedDate">Last Viewed Date</option>
+    <option value="Latitude">Latitude</option>
+    <option value="CurrencyIsoCode">Lead Currency</option>
+    <option value="Id">Lead ID</option>
+    <option value="Owner__c">Lead Owner</option>
+    <option value="LeadSource">Lead Source</option>
+    <option value="Lead_Score__c">Lead_Score</option>
+    <option value="Longitude">Longitude</option>
+    <option value="MasterRecordId">Master Record ID</option>
+    <option value="MobilePhone">Mobile Phone</option>
+    <option value="NAGP__c">NAGP</option>
+    <option value="Netapp_Sales_Rep__c">Netapp Sales Rep</option>
+    <option value="NumberofLocations__c">Number of Locations</option>
+    <option value="Marketing_Original_Campaign__c">Originating Marketing Campaign</option>
+    <option value="Override_AWE__c">Override AWE</option>
+    <option value="OwnerId">Owner ID</option>
+    <option value="OwnerName">Owner Name</option>
+    <option value="Phone">Phone</option>
+    <option value="Primary__c">Primary</option>
+    <option value="Sophos_Product_Interest__c">Product Family</option>
+    <option value="ProductInterest__c">Product Interest</option>
+    <option value="Rating">Rating</option>
+    <option value="RecordTypeId">Record Type Name</option>
+    <option value="SICCode__c">SIC Code</option>
+    <option value="Salutation">Salutation</option>
+    <option value="Size_of_Company__c">Size_of_Company</option>
+    <option value="Pick_State__c">State (US &amp; Canada)</option>
+    <option value="State">State/Province</option>
+    <option value="Status">Status</option>
+    <option value="Street">Street</option>
+    <option value="SystemModstamp">System Modstamp</option>
+    <option value="Territory__c">Territory</option>
+    <option value="Title">Title</option>
+    <option value="IsUnreadByOwner">Unread By Owner</option>
+    <option value="Vertical_Industry__c">Vertical (Industry)</option>
+    <option value="Website">Website</option>
+    <option value="PostalCode">Zip/Postal Code</option>
+</select><span id="j_id0:pform:j_id7:filterPanel:j_id55:1:CFPanel"></span></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id65" colspan="1"><select id="j_id0:pform:j_id7:filterPanel:j_id55:1:operator" name="j_id0:pform:j_id7:filterPanel:j_id55:1:operator" class="input-medium span3" size="1" onchange="ToggleBetween(this.options[this.selectedIndex].value,this.id)">  <option value="Includes" selected="selected">Includes</option>
+    <option value="Equals">Equals</option>
+    <option value="Not Equal To">Not Equal To</option>
+    <option value="Is Null">Is Null</option>
+    <option value="Is Not Null">Is Not Null</option>
+    <option value="IsChanged">IsChanged</option>
+    <option value="ChangedFromTo">ChangedFromTo</option>
+    <option value="Contains">Contains</option>
+    <option value="Does Not Contain">Does Not Contain</option>
+    <option value="Starts With">Starts With</option>
+    <option value="Ends With">Ends With</option>
+    <option value="Does Not Start With">Does Not Start With</option>
+    <option value="Does Not End With">Does Not End With</option>
+    <option value="Excludes">Excludes</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id67" colspan="1"><span id="j_id0:pform:j_id7:filterPanel:j_id55:1:ValuePicklistMulti"><select id="j_id0:pform:j_id7:filterPanel:j_id55:1:chooseValueMulti" name="j_id0:pform:j_id7:filterPanel:j_id55:1:chooseValueMulti" class="input-medium span3 multiselect" multiple="multiple" size="2" style="display: none;">    <option value="Aerospace &amp; Defense" selected="selected">Aerospace &amp; Defense</option>
+    <option value="Biotechnology">Biotechnology</option>
+    <option value="Consumer Products">Consumer Products</option>
+    <option value="Education Higher Ed/Tertiary">Education Higher Ed/Tertiary</option>
+    <option value="Education Primary/Secondary">Education Primary/Secondary</option>
+    <option value="Entertainment &amp; Media">Entertainment &amp; Media</option>
+    <option value="Financial Services">Financial Services</option>
+    <option value="Government,Local" selected="selected">Government,Local</option>
+    <option value="Government, National/Federal" selected="selected">Government, National/Federal</option>
+    <option value="Government, State/Regional">Government, State/Regional</option>
+    <option value="Healthcare-Private">Healthcare-Private</option>
+    <option value="Healthcare-Public">Healthcare-Public</option>
+    <option value="High Technology">High Technology</option>
+    <option value="ISP">ISP</option>
+    <option value="Manufacturing">Manufacturing</option>
+    <option value="MSP">MSP</option>
+    <option value="MSP/Reseller">MSP/Reseller</option>
+    <option value="Natural Resources">Natural Resources</option>
+    <option value="Non-Profit">Non-Profit</option>
+    <option value="Retail">Retail</option>
+    <option value="Services">Services</option>
+    <option value="Telecommunications">Telecommunications</option>
+    <option value="Transportation">Transportation</option>
+    <option value="Utility">Utility</option>
+    <option value="Other">Other</option>
+</select><!-- button type="button" class="ui-multiselect ui-widget ui-state-default ui-corner-all" aria-haspopup="true" style="width: 225px;"><span class="ui-icon ui-icon-triangle-1-s"></span><span>Aerospace &amp;amp; Defense, Government,Local, Government, National/Federal</span></button --></span></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id75" colspan="1"><select aria-labelledby="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResult_pcl" id="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResult" name="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResult"><option value="">--None--</option><option value="True - If no child record found">True - If no child record found</option>
+<option value="False - If no child record found">False - If no child record found</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id76" colspan="1"><select aria-labelledby="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResultOperator_pcl" id="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResultOperator" name="j_id0:pform:j_id7:filterPanel:j_id55:1:evaluateResultOperator"><option value="">--None--</option><option value="AND">AND</option>
+<option value="OR">OR</option>
+</select></td><td class="dataCell  " id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id77" colspan="1"><table>
+<tbody>
+<tr>
+<td><input class="btn" id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id79" name="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id79" onclick="A4J.AJAX.Submit('j_id0:pform',event,{'oncomplete':function(request,event,data){showCrossObjectFieldInColor();},'similarityGroupingId':'j_id0:pform:j_id7:filterPanel:j_id55:1:j_id79','parameters':{'j_id0:pform:j_id7:filterPanel:j_id55:1:j_id79':'j_id0:pform:j_id7:filterPanel:j_id55:1:j_id79'} } );return false;" value="+" type="button"></input></td>
+<td><input class="btn" id="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id80" name="j_id0:pform:j_id7:filterPanel:j_id55:1:j_id80" onclick="A4J.AJAX.Submit('j_id0:pform',event,{'oncomplete':function(request,event,data){showCrossObjectFieldInColor();},'similarityGroupingId':'j_id0:pform:j_id7:filterPanel:j_id55:1:j_id80','parameters':{'index':'3','j_id0:pform:j_id7:filterPanel:j_id55:1:j_id80':'j_id0:pform:j_id7:filterPanel:j_id55:1:j_id80'} } );return false;" value="-" type="button"></input></td>
+</tr>
+</tbody>
+</table>
+</td></tr></tbody></table>
+ <script>
+        $j=jQuery.noConflict();
+        $j(document).ready(function() {
+           showCrossObjectFieldInColor();
+           
+         });
+         
+         function showCrossObjectFieldInColor(){
+             $j('select[id*="choosefield"] option[value="CrossFormula"]').css("color", "red");
+              $j('select[id*="choosefield"] option[value^="GlobalVariable-"]').css("color", "red");
+              setTimeout(function (){populateMultiSelect();}, 1000);
+         }
+         function populateMultiSelect(){
+             $j('.multiselect').multiselect({
+                      noneSelectedText: 'Select',
+                      selectedList: 4
+                   });
+         }
+         function populateOwnerNameJS(field, index){
+            var idComp = document.getElementById(index +'_lkid');
+            if(idComp != null && idComp.value != ''){
+                populateOwnerName(field , index,idComp.value);
+            }
+         }
+    </script>   
+</apex:page>

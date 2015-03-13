@@ -1,0 +1,159 @@
+<!-- 
+    AUTHOR:         Patrick Fordey
+    NAME:           MassUpdateLead
+    CALLED FROM:    Lead Detail View
+    DESCRIPTION:    Allows users to update the Lead Status, Owner and for internal users only the Partner and Distributor.
+    TEST CLASS:     
+    NOTE:           None.
+    CHANGE HISTORY: 30th July 2014 - Version 2, initial version lost in refresh.
+ -->
+<apex:page standardController="Lead" extensions="MassUpdateLeadEx" recordSetVar="unused"  sidebar="false" action="{!setAttributes}" > 
+
+<style type="text/css">
+.border {
+    border-color: red; 
+    border-width: 3px; 
+    border-style: solid;
+}
+</style>
+ 
+<apex:form id="form" >
+
+<apex:actionFunction name="jsSave" action="{!saveRecs}" />
+<apex:pageMessages />
+<apex:pageBlock >
+<h4>Notes on page usage:</h4>
+<br/>
+<p>
+1) Changes will not be saved to the selected records until the save button is pressed on the last page <br/>
+2) Each of one of the set of drops downs is for one of the record types you selected. For example, if you selected a Sophos Generated AE and a Sophos Generated SDR lead to mass update you will be presented with two sets of drop downs, one for each record type upto a maximum of 8. This is because the lead status can be and in many cases are different for each record type. <br/>
+<div id="JSError"></div> <!-- the div is there to have error messages rendered by the JS function -->
+</p>
+</apex:pageBlock>
+
+<apex:pageBlock id="main">
+<apex:pageBlockButtons rendered="{!fieldsToRender!='6'&&fieldsToRender!='5'}" >
+<apex:commandButton value="Save" onclick="validate(); return false;" rendered="{!renderMiddlePage=='1'}"/>
+<!-- <apex:commandButton value="Save" action="{!saveRecs}" rendered="{!renderLastPage=='1'}"/> -->
+<apex:commandButton value="Cancel" action="{!cancel}"/>
+</apex:pageBlockButtons>
+
+<apex:pageBlock rendered="{!fieldsToRender=='0'}" title="Select which fields to update">
+<apex:selectList id="fieldsList" value="{!fieldsToRender}" size="1" >
+            <apex:selectOption itemValue="0" itemLabel="--None--" /> 
+            <apex:selectOption itemValue="1" itemLabel="Lead Status" /> 
+            <apex:selectOption itemValue="2" itemLabel="Owner"   />
+            <apex:selectOption itemValue="3" itemLabel="Assigned Partner"   />
+            <apex:selectOption itemValue="4" itemLabel="Assigned Distributor"  />
+			<apex:selectOption itemValue="5" itemLabel="Accept Leads"  />
+            <apex:selectOption itemValue="6" itemLabel="Reject Leads"    />
+            <apex:selectOption itemValue="7" itemLabel="Account Type"    />
+            <apex:actionSupport action="{!setRenderMiddlePage}" event="onchange" reRender="form" />
+</apex:selectList>
+</apex:pageBlock>
+
+<apex:pageBlock title="Accept Leads" rendered="{!fieldsToRender=='5'}" >
+	<p>All leads that your have selected that are not accepted will be accepted.</p>
+<apex:commandButton value="Accept Leads" action="{!acceptLeads}" rendered="{!fieldsToRender=='5'}"/>
+<apex:commandButton value="Cancel" action="{!cancel}" rendered="{!fieldsToRender=='5'}"/>
+</apex:pageBlock>
+
+<apex:pageBlock title="Reject Leads" rendered="{!fieldsToRender=='6'}" >
+	<p>All leads that your have selected that are not rejected will be rejected.</p>
+<apex:commandButton value="Reject Leads" action="{!rejectLeads}" rendered="{!fieldsToRender=='6'}"/>
+<apex:commandButton value="Cancel" action="{!cancel}" rendered="{!fieldsToRender=='6'}"/>
+</apex:pageBlock>
+
+<apex:pageBlock title="Update Lead Owner" rendered="{!fieldsToRender=='2'}" >
+<apex:pageBlockTable value="{!workingLEad}" var="a" id="table">
+<apex:column headerValue="Lead Owner" rendered="{!fieldsToRender=='2'}">
+<apex:inputField value="{!a.OwnerId}"/>
+</apex:column>
+<apex:column headerValue="Record Type" rendered="false">
+<apex:inputField value="{!a.RecordTypeId}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+<apex:pageBlock title="Update Partner" rendered="{!fieldsToRender=='3'}" >
+<apex:pageBlockTable value="{!workingLead}" var="a" id="table">
+<apex:column headerValue="Assigned to Partner"  >
+<apex:inputField value="{!a.Assigned_to_Partner__c}"/>
+</apex:column>
+<apex:column headerValue="Record Type" rendered="false">
+<apex:inputField value="{!a.RecordTypeId}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Update Distributor" rendered="{!fieldsToRender=='4'}" >
+<apex:pageBlockTable value="{!workingLead}" var="a" id="table">
+<apex:column headerValue="Assigned to Distributor"  >
+<apex:inputField value="{!a.Assigned_to_Distributor__c}"/>
+</apex:column>
+<apex:column headerValue="Record Type" rendered="false">
+<apex:inputField value="{!a.RecordTypeId}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+<apex:pageBlock title="Update Account Type" rendered="{!fieldsToRender=='7'}" >
+<apex:pageBlockTable value="{!workingLead}" var="a" id="table">
+<apex:column headerValue="Update Account Type"  >
+<apex:inputField value="{!a.Account_Type__c}"/>
+</apex:column>
+<apex:column headerValue="Record Type" rendered="false">
+<apex:inputField value="{!a.RecordTypeId}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+
+
+
+
+</apex:pageBlock>
+ 
+ 
+</apex:form> 
+<!-- call the JQuery library and define the function to check for invalid status. If one is found do not save and instead highlight the error and render the error message -->
+<apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"/>
+
+<script>
+var j$ = jQuery.noConflict();
+var messageRendered = 0;
+
+j$(document).mousemove(function(){
+    j$('option:contains("Partner User")').hide();
+});
+    
+function validate() 
+{    
+
+    valid = true;
+
+    j$("[id$=leadStatus]").each(function() 
+    {
+        if (j$(this).val().indexOf('3d') != -1) {
+            j$(this).addClass('border');
+            valid = false;
+        }
+    });
+    
+    if(valid != false) 
+    {
+        jsSave();
+    }
+    else
+    {
+        if(messageRendered != 1 )
+        {    
+            j$('<font color="red"><b>You cannot set Lead Status to Converted in Mass Edit Mode.</b></font><br>').appendTo('#JSError'); 
+            messageRendered = 1;
+        }
+   
+    }
+ 
+}
+                
+</script>
+
+</apex:page>

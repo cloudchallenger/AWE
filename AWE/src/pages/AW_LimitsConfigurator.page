@@ -1,0 +1,18 @@
+<apex:page controller="AW_LimitsConfiguratorController">
+<apex:form id="form" >
+<apex:pageBlock title="AWE Limits">
+  <apex:pageMessages ></apex:pageMessages>
+  <apex:pageBlockTable value="{!lstAdvWorkflowLimits}" var="awelimit">
+     <apex:column headerValue="Limit Name">
+     	<apex:outputField value="{!awelimit.Name}"/>
+     </apex:column>
+     <apex:column headerValue="Value">
+     	<apex:inputField value="{!awelimit.Value__c}"/>
+     </apex:column>
+   </apex:pageBlockTable>
+   <apex:commandButton action="{!saveLimits}" value="Save"/>
+</apex:pageBlock>
+
+
+</apex:form>
+</apex:page>

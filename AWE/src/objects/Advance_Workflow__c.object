@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>AW_Advance_Workflow_VF</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>AW_Advance_Workflow_VF</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>This object holds the definition of the workflows for standard and custom objects</description>
+    <enableActivities>true</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Advance_Rule_Stamp__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Advance Rule Stamp</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CountRulesassociatedtoAdvanceWorkflow__c</fullName>
+        <externalId>false</externalId>
+        <label>#of Rules associated to Advance Workflow</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Description__c</fullName>
+        <description>Holds the description of the Workflow</description>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Advance Workflow doesn&apos;t trigger rule execution until you activate it. To activate a workflow rule, click Enable on the workflow rule detail page. Click Deactivate to prevent  Advance Workflow rules associated to an object  from triggering</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Advance Workflow doesn&apos;t trigger rule execution until you activate it. To activate a workflow rule, click Enable on the workflow rule detail page. Click Deactivate to prevent  Advance Workflow rules associated to an object  from triggering</inlineHelpText>
+        <label>Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object__c</fullName>
+        <description>Captures the Object Name ( Standard or Custom ) for which the advance workflow is created</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Captures the Object Name ( Standard or Custom ) for which the advance workflow is created</inlineHelpText>
+        <label>Object</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>is_Log_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>If flag is  on AWE captures run time details on system methods and values involved. To set the flag on Click the Apex log switch button to initiate activation or deactivation</inlineHelpText>
+        <label>Apex Log is Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <label>Advance Workflow</label>
+    <nameField>
+        <label>Advance Workflow Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Advance Workflows</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Unique_Rule_Name</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( (ISNEW() ||  ISCHANGED(Name)) &amp;&amp; Name =  VLOOKUP( $ObjectType.Advance_Workflow__c.Fields.Name ,  $ObjectType.Advance_Workflow__c.Fields.Name , Name),true,false )</errorConditionFormula>
+        <errorMessage>Advance Workflow Name  must be Unique</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Apex_Log_On_Off</fullName>
+        <availability>online</availability>
+        <description>Apex Log Settings</description>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Apex Log On/Off</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/apex/AW_Configurator?isApexLog=true&amp;id={!Advance_Workflow__c.Id}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Graph_Workflow</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Graph Workflow</masterLabel>
+        <openType>noSidebar</openType>
+        <page>AW_VisualDisplay_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Import_Export</fullName>
+        <availability>online</availability>
+        <description>Import Export Rules (Criteria,Actions) of a Workflow</description>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Import/Export Workflow</masterLabel>
+        <openType>sidebar</openType>
+        <page>AW_ImportExport_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Retrieve_Archived_Rules</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>page</linkType>
+        <masterLabel>Retrieve Archived Rules</masterLabel>
+        <openType>replace</openType>
+        <page>AW_RetrieveArchive_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>RuleListView</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Rule List View</masterLabel>
+        <openType>sidebar</openType>
+        <page>AW_ListRules_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>Simulate_Workflow</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Simulate Workflow</masterLabel>
+        <openType>noSidebar</openType>
+        <page>AW_SimulateWorkflowCapture_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>ViewExecutionHistory</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>View Execution History</masterLabel>
+        <openType>sidebar</openType>
+        <page>AW_ExecutionHistory</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>View_Execution_History2</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>View Execution History2</masterLabel>
+        <openType>sidebar</openType>
+        <page>AW_ExecutionHistory2_VF</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
+        <fullName>testlistrules</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>testlistrules</masterLabel>
+        <openType>noSidebar</openType>
+        <page>AW_ListRulesWrapper_Vf</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,10 @@
+<apex:page controller="AW_ExecutionHistoryController2" cache="true" 
+        contentType="text/csv#ExecutionHistory.csv" 
+        showHeader="false" sidebar="false" standardStylesheets="false" readOnly="true">
+
+Record Name,Rule,Rule Version,Rule Execution Status,Created Date
+<apex:repeat value="{!allHistoryRecords}" var="h">
+"{!h.Record_Name__c}","{!h.RuleName__c}","{!h.Rule_Version__c}","{!h.Rule_Execution_Status__c}","{!h.CreatedDate}"
+</apex:repeat>
+
+</apex:page>

@@ -1,0 +1,106 @@
+<apex:page controller="TestPageController"   > <apex:includeScript value="{!URLFOR($Resource.UI, 'jquery-1.8.3.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.UI, 'jquery-ui.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.UI, 'jquery.multiselect.js')}"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.UI, 'jquery-ui.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.UI, 'jquery.multiselect.css')}"/>
+
+<apex:sectionheader title="Manage Rule Criteria and Filter Logic" subtitle="{!RuleRecord.Name}" />
+<apex:form id="pform" >
+    <apex:pageBlock title="Dynamic Filed Schema for Lead Fields"  >
+     
+         <apex:actionRegion >
+             <apex:actionFunction name="renderOperator" action="{!populateOperator}" reRender="filterPanel" oncomplete="showCrossObjectFieldInColor();" >
+                  <apex:param name="parentField" value="" assignTo="{!parentField}"/>
+                  <apex:param name="Inde" value="" assignTo="{!index}"/>
+             </apex:actionFunction>
+         </apex:actionRegion>
+         
+         <apex:pageblocksection id="filterPanel" title="Rule Criteria" columns="1">
+                 <apex:variable value="{!1}" var="Counter" />
+                  <apex:pageBlockTable value="{!FilterWrapper}" var="fw" width="100%"  rendered="{!FilterWrapper.size >0}"  >                    
+                    <apex:column headerValue="S.No" width="10%"> 
+                        <label class="span1"><span class="badge badge-important" width="10%"><apex:outputText value="{!Counter}"/>
+                        </span></label><apex:variable value="{!Counter+1}" var="Counter" />
+                    </apex:column>
+                    
+                     <apex:column headerValue="Field">
+                     <apex:selectList id="choosefield" value="{!fw.Field_Name}" size="1"  rendered="true" 
+                     style="if(this.options.value=='Cross Formula',color:red;,;)" styleClass="input-medium span3 changeColor" 
+                     onchange="renderOperator(this.options[this.selectedIndex].value,this.id)">
+                        <apex:selectOptions value="{!fw.fieldOptions}"></apex:selectOptions>
+                        </apex:selectList>
+                    </apex:column>
+                    
+                      <!--  This is value column which render on basis of field type -->                                                         
+                      <apex:column headerValue="Value" id="FieldsValues">
+                         
+                         <apex:outputPanel id="ValueText" rendered="{!fw.isTextBox}"  >                           
+                           <apex:InputText value="{!fw.textBox}" styleClass="input-medium span3"/>
+                       </apex:outputPanel>
+                       
+                       <apex:outputPanel id="ValueDateText" rendered="{!fw.isDateTime}"  >                           
+                           <apex:InputText value="{!fw.textBox}" styleClass="cToDatePicker"/>
+                       </apex:outputPanel>
+                       
+                       
+                       <apex:outputPanel id="ValueReference" rendered="{!fw.isReference}"  >                           
+                           <apex:inputText id="account">
+				            {!fw.referenceObjectName}
+				            <c:Auto_Complete objectname="{!fw.referenceObjectName}" autocomplete_textbox="{!$Component.account}" />
+					        	</apex:inputText>
+					        <apex:inputHidden id="account_lkid" value="{!fw.textBox}" />
+                       </apex:outputPanel>
+                       
+                       <apex:outputPanel id="ValueCheckbox" rendered="{!fw.isBoolean}"  >
+                           <apex:inputCheckbox value="{!fw.checkBox}" styleClass="input-medium span3"/>
+                       </apex:outputPanel>
+                       
+                       <apex:outputPanel id="ValuePicklist" rendered="{!fw.isPicklist}"  >                                 
+                                  <apex:selectList id="chooseValue" value="{!fw.picklistvalues}" size="2" multiselect="false"  rendered="true" 
+                                  styleClass="input-medium span3 multiselect" >
+                                <apex:selectOptions value="{!fw.ValueOption}"></apex:selectOptions>
+                                </apex:selectList>
+                       </apex:outputPanel>
+                        
+                         <apex:outputPanel id="ValuePicklistMulti" rendered="{!fw.isMultiselect}"  >
+                                   <apex:selectList id="chooseValueMulti" value="{!fw.picklistvalues}" size="2" multiselect="true"  rendered="true" 
+                                   styleClass="input-medium span3 multiselect" >
+                                <apex:selectOptions value="{!fw.ValueOption}"></apex:selectOptions>
+                                </apex:selectList>
+                       </apex:outputPanel>                       
+
+                    </apex:column> 
+                    
+                    <apex:column headerValue="Action" >
+                    <apex:panelGrid columns="2">
+                     <apex:commandbutton value="+"   action="{!addmorefilter}"  rendered="{!if(FilterWrapper.size+1==Counter,true,false)}" rerender="filterPanel,CommandBox" oncomplete="showCrossObjectFieldInColor();" /> 
+                      <apex:commandbutton value="-"  action="{!deletefilter}" rerender="filterPanel,CommandBox"  oncomplete="showCrossObjectFieldInColor();" >
+                   <apex:param name="index" value="{!Counter}" assignTo="{!toremovecounter}" ></apex:param>
+                </apex:commandbutton> 
+                </apex:panelGrid>
+                    </apex:column>
+                    
+                </apex:pageBlockTable> 
+         </apex:pageblocksection>
+    </apex:pageBlock>
+</apex:form>
+ <script>
+ 
+        $j=jQuery.noConflict();
+        $j(document).ready(function() {
+       	 $j('.cToDatePicker').datepicker();
+           showCrossObjectFieldInColor();           
+         });
+         
+         function showCrossObjectFieldInColor(){
+             $j('.cToDatePicker').datepicker();
+             $j('select[id*="choosefield"] option[value="CrossFormula"]').css("color", "red");
+              $j('select[id*="choosefield"] option[value^="GlobalVariable-"]').css("color", "red");
+              $j('.multiselect').multiselect({
+                  noneSelectedText: 'Select',
+                  selectedList: 4
+               });
+         }
+    </script>   
+</apex:page>

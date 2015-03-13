@@ -1,0 +1,54 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+  
+  Table of Contents
+Revision History    1
+Project Team    2
+Background  5
+Objectives  5
+Requirements    7
+Functional Overview 15
+Design Overview 18
+              Data Model    18
+              Standard Objects  25
+            Custom Objects  ….…………………………………………………………………………………………………………………….25
+             CustomTabs and Apps ….………………………………………………….……………………………………………………26.
+             Partner Portal Tabs………………………………………………………………………………………………………….……28
+            Custom Page Layouts……………………………………………………………………………….……28
+             Partner Portal Page Layouts…….……………………………………….……………………………………………………26.
+               Custom Reports……………………………………………………………………………………………….………………………??. 
+               Email Templates ……………………………………………………………………………………………………………………….??
+             Custom Buttons and Links….………………………………………………………………………………………………………..??
+
+
+
+          Custom S-Controls………………………………………………………………………………………………………………
+          Custom APEX Triggers and Classes………………………………………………………………………………………
+Profile Overview………………………………………………………………………………………………………………………………
+          AEG Profiles  3
+          Service Profile Permissions   4
+          Existing Profile Permissions on Service Objects?????? 5
+          Page Layouts Assignments  5
+Security Overview………………………………………………………………………………………………………………………………
+         Org Wide Defaults………………………………………………………………………………………………………………
+         Sharing Settings   3
+         Roles  6
+         Workspace Organization
+         Workspace Permisions
+
+
+Custom App Settings 6
+Admin & General Permissions 6
+Appendix A: Data Elements………………………………………………………………………………………………………..
+Properties      
+Events  
+Appendix B: Sample Page Layouts      
+
+
+ 
+
+
+</apex:page>

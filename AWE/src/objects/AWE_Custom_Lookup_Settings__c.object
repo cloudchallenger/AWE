@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>This is setting for custom lookup</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Field_API_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Field API Name</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Object_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Object Name</label>
+        <length>85</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>isName__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isName</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>AWE Custom Lookup Settings</label>
+</CustomObject>
