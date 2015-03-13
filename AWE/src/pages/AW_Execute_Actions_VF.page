@@ -1,3 +1,0 @@
-<apex:page controller="AW_DynamicActionsHandler"  >
-  	 <apex:dynamicComponent componentValue="{!IframeCanvasAction}" /> 
-</apex:page>

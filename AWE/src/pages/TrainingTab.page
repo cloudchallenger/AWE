@@ -1,9 +1,0 @@
-<apex:page >
-<!-- add a search box for content search add top nav elements use command link
-// add output panel - refreshed based on the selection of top nav element  -->
-<style type="text/css" media="Screen">/*\*/@import url("/resource/1222304833000/help_portal_css");/**/</style>
-<div>
-<div margin-left="20px"> <img src="/resource/1222211631000/help_training_header"> </div>
-</div></br></br>
-<apex:iframe src="https://na2.salesforce.com/train/trainingIndex.jsp" scrolling="true" id="theIframe" frameborder="1"/>
- </apex:page>

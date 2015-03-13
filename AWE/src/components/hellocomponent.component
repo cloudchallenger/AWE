@@ -1,6 +1,0 @@
-<apex:component >
-    <apex:attribute name="value" type="String" 
-                    description="The Value attribute"
-                    default="Peter Hello PGB"/>
-    <h1> {!value}</h1>
-</apex:component>

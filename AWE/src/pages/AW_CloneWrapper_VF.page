@@ -1,3 +1,0 @@
-<apex:page standardController="Rule__c" extensions="AW_RuleController" tabstyle="Rule__c"  action="{!returnPage}"   >
-
-</apex:page>

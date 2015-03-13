@@ -1,3 +1,0 @@
-<apex:page standardController="Advance_Workflow__c" extensions="EnableLogsForAWEExtensions" action="{!updateLogging}" >
-Processing.....
-</apex:page>
